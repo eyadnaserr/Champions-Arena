@@ -1,0 +1,60 @@
+ 
+User(Username ,Password)
+     ————————
+SystemAdmin (Username)
+             ————————
+             --------
+SystemAdmin.Username references User
+
+SportsAssociationManager(Username, Id, name) 
+                        —————————
+                        ---------
+SportsAssociationManager.Username references User
+
+Match( Id, host, starting_time , ending_time, allowed no. of attendees , StadiumID, Username , ID, edit , delete , create)
+      ———
+Match.StadiumID references stadium
+Match.(Username , ID ) references SportsAssociationManager
+
+Tickets( MatchID, ID , status) 
+         ————————————
+         ------
+Tickets.MatchID references Match
+
+Fan(Username, national_ID , name, birth_date , address , blocked , phone_num ,UsernameSystem , add , delete , block)          
+   ———————————————————————                                                                  
+   ---------                                                                  --------------
+Fan.UsernameSystem references SystemAdmin
+Fan.Username references User
+
+Fan_Ticket(Username, national_Id ,MatchID)
+          ———————————————————————————————
+          -------------------------------
+Fan_Ticket.(Username, national_Id) references Fan Fan_Ticket.MatchID references Match
+
+Stadium( ID, name, location , capacity , stadium_status , UsernameSystem , add , delete )
+        ————                                              ---------------
+Stadium.UsernameSystem references SystemAdmin 
+StadiumManager( Username , StadiumID , ID , Name , UsernameCR , CRID)
+                ————————   ————————    ———         ----------  -----
+                --------   --------
+StadiumManager.Username references User 
+StadiumManager.StadiumID references Stadium 
+StadiumManager.(UsernameCR , CRID) references ClubRepresentative
+   
+Club ( ID , name , location , UsernameSystem , add , delete )
+      ————
+Club.UsernameSystem references SystemAdmin
+ClubRepresentative( clubID, Username , ID , name, UsernameSM, SMID , approve , disapprove )
+                    ———-—   ———-————— —-——        ----------  ----
+                    -----   ---------
+ClubRepresentative.clubID references club 
+ClubRepresentative.Username references User 
+ClubRepresentative.(UsernameSM, SMID) references StadiumManager
+play(club1_ID , club2_ID , MatchID )
+     ———————    ————————   ———————
+     -------    --------   -------
+play.club1_ID references club 
+play.club2_ID references club 
+play.MatchID references Match
+  
